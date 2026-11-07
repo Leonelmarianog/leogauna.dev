@@ -32,7 +32,6 @@ Personal website. Astro 7, static output, no other dependencies. The `Dockerfile
 - Create the branch from an up-to-date `main`.
 - Name the branch `<type>/<short-description>`, with a type from the commit list below. Example: `feat/project-list`.
 - Do not use git worktrees.
-- Merge into `main` only when the repository owner approves the merge.
 
 ### Commits
 
@@ -51,7 +50,9 @@ Personal website. Astro 7, static output, no other dependencies. The `Dockerfile
 
 ### Merges
 
-- Before each merge, update `HANDOFF.md` on the branch. Add one entry to its merge log.
+- IMPORTANT: Do not merge branches or pull requests. The repository owner does all merges.
+- When a branch is ready, push it and open a pull request. Then stop.
+- Before you open the pull request, update `HANDOFF.md` on the branch. Add one entry to its merge log.
 - If the branch corrects a problem in `KNOWN-ISSUES.md`, move that problem to "Closed" on the same branch.
 
 ## Writing rules
