@@ -1,46 +1,53 @@
-# Astro Starter Kit: Basics
+# leogauna.dev
+
+Source code for the personal website at [leogauna.dev](https://leogauna.dev). The site is built with [Astro](https://astro.build) as a static site.
+
+## Requirements
+
+- Node.js 22.12 or later
+- Docker (optional, to build the production image)
+
+## Commands
+
+Run all commands from the root of the project.
+
+| Command | Action |
+| :-- | :-- |
+| `npm install` | Installs the dependencies. |
+| `npm run dev` | Starts the local dev server at `localhost:4321`. |
+| `npm run build` | Builds the production site to `./dist/`. |
+| `npm run preview` | Serves the build locally. |
+
+## Docker
+
+Build the image:
 
 ```sh
-npm create astro@latest -- --template basics
+docker build -t leogaunadotdev .
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Start a container on port 4321:
 
-## 🚀 Project Structure
+```sh
+docker run --rm -p 4321:80 leogaunadotdev
+```
 
-Inside of your Astro project, you'll see the following folders and files:
+The image serves the static build with nginx on port 80.
+
+## Project structure
 
 ```text
 /
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+├── public/        Static files (favicons)
+├── src/
+│   ├── components/
+│   ├── layouts/
+│   └── pages/
+├── Dockerfile
+├── HANDOFF.md
+└── KNOWN-ISSUES.md
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Known issues
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+See [KNOWN-ISSUES.md](KNOWN-ISSUES.md).
