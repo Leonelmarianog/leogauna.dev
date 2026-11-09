@@ -38,16 +38,12 @@ The image serves the static build with nginx on port 80.
 
 ```text
 /
+├── docs/agents/   Configuration for the engineering skills
 ├── public/        Static files (favicons)
 ├── src/
 │   ├── components/
 │   ├── layouts/
 │   └── pages/
-├── Dockerfile
-├── HANDOFF.md
-└── KNOWN-ISSUES.md
+├── CLAUDE.md
+└── Dockerfile
 ```
-
-## Known issues
-
-See [KNOWN-ISSUES.md](KNOWN-ISSUES.md).
