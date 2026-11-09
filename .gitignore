@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # local session material
 dev/
+
+# local issue tracker
+.scratch/
