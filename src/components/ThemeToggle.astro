@@ -1,0 +1,88 @@
+---
+import type { Locale } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  /** The Locale of the current page. The button's label is in this Locale. */
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<!-- The label assumes the light Theme. The script corrects it once the Theme is known. -->
+<button
+  type="button"
+  class="corner-control theme-toggle"
+  aria-label={t('theme.toDark')}
+  data-label-to-dark={t('theme.toDark')}
+  data-label-to-light={t('theme.toLight')}
+>
+  <svg class="icon icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+  </svg>
+  <svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="12" r="4"></circle>
+    <path
+      d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+    ></path>
+  </svg>
+</button>
+
+<script>
+  import { themePreferenceKey } from '../theme/preference';
+
+  const root = document.documentElement;
+
+  for (const button of document.querySelectorAll<HTMLButtonElement>('.theme-toggle')) {
+    const showLabel = () => {
+      const { labelToDark, labelToLight } = button.dataset;
+      button.ariaLabel = (root.dataset.theme === 'dark' ? labelToLight : labelToDark) ?? null;
+    };
+
+    showLabel();
+    button.addEventListener('click', () => {
+      const theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = theme;
+      try {
+        localStorage.setItem(themePreferenceKey, theme);
+      } catch {
+        // Storage is blocked: the Theme switches, but the choice is not remembered.
+      }
+      showLabel();
+    });
+  }
+</script>
+
+<style>
+  .icon {
+    width: 1.125rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* A moon in the light Theme, a sun in the dark Theme. */
+  .icon-sun,
+  :global(html[data-theme='dark']) .icon-moon {
+    display: none;
+  }
+
+  :global(html[data-theme='dark']) .icon-sun {
+    display: block;
+  }
+
+  /* Without JavaScript, data-theme is absent: follow the operating system. */
+  @media (prefers-color-scheme: dark) {
+    :global(html:not([data-theme])) .icon-moon {
+      display: none;
+    }
+
+    :global(html:not([data-theme])) .icon-sun {
+      display: block;
+    }
+  }
+</style>

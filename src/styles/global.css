@@ -1,10 +1,66 @@
+/* Registered as colors so they can transition when the Theme switches. */
+@property --color-gradient-start {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --color-gradient-end {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --color-base {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --color-text {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --color-filled-text {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+/* The light Theme. */
 :root {
-  --color-background: linear-gradient(135deg, #ffbc17 0%, #ff8a1f 100%);
+  --color-gradient-start: #ffbc17;
+  --color-gradient-end: #ff8a1f;
   --color-base: #ffbc17;
   --color-text: #1c1408;
   --color-filled-text: #ffbc17;
   --font-body: var(--font-space-grotesk);
   --font-mono: var(--font-jetbrains-mono);
+  transition-property: --color-gradient-start, --color-gradient-end, --color-base, --color-text,
+    --color-filled-text;
+  transition-duration: 0.4s;
+}
+
+/* The dark Theme, set by the Theme preference or the operating system. */
+html[data-theme='dark'] {
+  --color-gradient-start: #2a2a2d;
+  --color-gradient-end: #030303;
+  --color-base: #030303;
+  --color-text: #ffbc17;
+  --color-filled-text: #030303;
+}
+
+/* Without JavaScript, data-theme is absent: follow the operating system. */
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) {
+    --color-gradient-start: #2a2a2d;
+    --color-gradient-end: #030303;
+    --color-base: #030303;
+    --color-text: #ffbc17;
+    --color-filled-text: #030303;
+  }
 }
 
 *,
@@ -20,10 +76,38 @@ html {
 body {
   margin: 0;
   min-height: 100dvh;
-  background: var(--color-background);
+  background: linear-gradient(135deg, var(--color-gradient-start) 0%, var(--color-gradient-end) 100%);
   color: var(--color-text);
   font-family: var(--font-body);
   /* The one fluid text size. Text and em spacing inherit it. */
   font-size: clamp(0.9375rem, 0.75rem + min(1vw, 1.2vh), 1.3125rem);
   line-height: 1.6;
+}
+
+/* The round controls in the top corner: the language toggle and the theme toggle. */
+.corner-control {
+  display: grid;
+  place-items: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0;
+  border: 1.5px solid var(--color-text);
+  border-radius: 50%;
+  background: none;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.corner-control:hover {
+  background-color: var(--color-text);
+  color: var(--color-filled-text);
+}
+
+.corner-control:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 3px;
 }
