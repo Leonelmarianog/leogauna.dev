@@ -21,7 +21,7 @@ const t = useTranslations(locale);
       </h1>
       <p class="summary">{t('home.summary')}</p>
       <ul class="links">
-        <li><a class="button button-filled" href={site.cvUrl} download>{t('home.cv')}</a></li>
+        <li><a class="button button-filled" href={site.cvUrl} download={site.cvFileName}>{t('home.cv')}</a></li>
         <li>
           <a class="button" href={site.linkedinUrl} target="_blank" rel="noopener noreferrer"
             >{t('home.linkedin')}</a

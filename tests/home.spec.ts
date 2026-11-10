@@ -42,7 +42,7 @@ test.describe('English home page', () => {
   test('links point to the site data targets', async ({ page }) => {
     const cv = page.getByRole('link', { name: 'Download CV ↓' });
     await expect(cv).toHaveAttribute('href', site.cvUrl);
-    await expect(cv).toHaveAttribute('download', /.*/);
+    await expect(cv).toHaveAttribute('download', site.cvFileName);
 
     const github = page.getByRole('link', { name: 'GitHub ↗' });
     await expect(github).toHaveAttribute('href', site.githubUrl);
@@ -61,6 +61,17 @@ test.describe('English home page', () => {
       'href',
       `mailto:${site.email}`,
     );
+  });
+
+  test('downloads the CV as a PDF named Leonel-Gauna-CV.pdf', async ({ page }) => {
+    const downloadPromise = page.waitForEvent('download');
+    await page.getByRole('link', { name: 'Download CV ↓' }).click();
+    const download = await downloadPromise;
+    expect(download.suggestedFilename()).toBe('Leonel-Gauna-CV.pdf');
+
+    const response = await page.request.get(site.cvUrl);
+    expect(response.ok()).toBe(true);
+    expect(response.headers()['content-type']).toContain('application/pdf');
   });
 
   test('uses the light Theme colors', async ({ page }) => {

@@ -1,7 +1,8 @@
 /** Link targets for the home page. Replace each TODO with the real value. */
 export const site = {
-  // TODO: add the real CV file to `public/` and update this path.
   cvUrl: '/cv.pdf',
+  /** The name the CV is saved under when a visitor downloads it. */
+  cvFileName: 'Leonel-Gauna-CV.pdf',
   // TODO: replace with the real LinkedIn profile URL.
   linkedinUrl: 'https://www.linkedin.com/in/TODO',
   githubUrl: 'https://github.com/Leonelmarianog',
