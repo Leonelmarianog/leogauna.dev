@@ -23,4 +23,6 @@ body {
   background: var(--color-background);
   color: var(--color-text);
   font-family: var(--font-body);
+  /* The one fluid text size. Text and em spacing inherit it. */
+  font-size: clamp(0.9375rem, 0.75rem + min(1vw, 1.2vh), 1.3125rem);
 }
