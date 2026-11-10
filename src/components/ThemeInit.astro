@@ -1,0 +1,22 @@
+---
+import { themePreferenceKey } from '../theme/preference';
+
+/**
+ * Sets `data-theme` on `<html>` before the page paints: the Theme preference if there is
+ * one, else the operating system's Theme. Every page includes it, so a visitor with a dark
+ * Theme preference never sees a light flash.
+ */
+---
+
+<script is:inline define:vars={{ themePreferenceKey }}>
+  let theme = null;
+  try {
+    theme = localStorage.getItem(themePreferenceKey);
+  } catch {
+    // Storage is blocked: follow the operating system's Theme.
+  }
+  if (theme !== 'light' && theme !== 'dark') {
+    theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  document.documentElement.dataset.theme = theme;
+</script>

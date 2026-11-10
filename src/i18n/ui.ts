@@ -11,6 +11,10 @@ const en = {
   'home.linkedin': 'LinkedIn ↗',
   'home.github': 'GitHub ↗',
   'home.email': 'Email',
+  /** Accessible name of the theme toggle in the light Theme. */
+  'theme.toDark': 'Switch to dark theme',
+  /** Accessible name of the theme toggle in the dark Theme. */
+  'theme.toLight': 'Switch to light theme',
   /** Shown on the language toggle that leads to this Locale. */
   'locale.code': 'EN',
   /** Accessible name of the language toggle that leads to this Locale, in this Locale. */
@@ -30,6 +34,8 @@ const es = {
   'home.linkedin': 'LinkedIn ↗',
   'home.github': 'GitHub ↗',
   'home.email': 'Correo',
+  'theme.toDark': 'Cambiar a tema oscuro',
+  'theme.toLight': 'Cambiar a tema claro',
   'locale.code': 'ES',
   'locale.viewIn': 'Ver en español',
 } as const;
