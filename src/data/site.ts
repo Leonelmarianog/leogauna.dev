@@ -1,11 +1,9 @@
-/** Link targets for the home page. Replace each TODO with the real value. */
+/** Link targets for the home page. */
 export const site = {
   cvUrl: '/cv.pdf',
   /** The name the CV is saved under when a visitor downloads it. */
   cvFileName: 'Leonel-Gauna-CV.pdf',
-  // TODO: replace with the real LinkedIn profile URL.
-  linkedinUrl: 'https://www.linkedin.com/in/TODO',
+  linkedinUrl: 'https://www.linkedin.com/in/leonel-gauna-15590716b/',
   githubUrl: 'https://github.com/Leonelmarianog',
-  // TODO: confirm the real email address.
-  email: 'hello@leonelgauna.com',
+  email: 'leonel.mariano.g@gmail.com',
 } as const;
