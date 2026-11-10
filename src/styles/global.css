@@ -1,0 +1,29 @@
+:root {
+  --color-background: linear-gradient(135deg, #ffbc17 0%, #ff8a1f 100%);
+  --color-base: #ffbc17;
+  --color-text: #1c1408;
+  --color-filled-text: #ffbc17;
+  --font-body: var(--font-space-grotesk);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--color-base);
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  /* The one fluid text size. Text and em spacing inherit it. */
+  font-size: clamp(0.9375rem, 0.75rem + min(1vw, 1.2vh), 1.3125rem);
+  line-height: 1.6;
+}

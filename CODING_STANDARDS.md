@@ -26,4 +26,13 @@ Example:
 font-size: clamp(2.25rem, 1rem + min(8vw, 8vh), 6rem);
 ```
 
+### Where the `clamp()` goes
+
+Set the fluid text size once, on `body`. This follows Kevin Powell's approach to responsive typography:
+
+- Text that has no `font-size` of its own inherits the `body` size.
+- Spacing that must follow the text uses `em`, so it scales with that size. Do not give it a `clamp()` of its own.
+- Give an element its own `clamp()` only when it must scale over a different range than the body text, for example a large display heading. Size its parts in `em` of that heading.
+- Sizes that must stay the same on every screen use `rem`, with no `clamp()`.
+
 Do not write a fluid size as a viewport unit alone, for example `font-size: 5vw`. It ignores the visitor's font-size setting.

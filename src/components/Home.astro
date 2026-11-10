@@ -1,0 +1,112 @@
+---
+import { site } from '../data/site';
+import type { Locale } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import Layout from '../layouts/Layout.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<Layout locale={locale} title={t('meta.title')} description={t('meta.description')}>
+  <main>
+    <div class="content">
+      <h1>
+        <span class="greeting">{t('home.greeting')}</span>
+        <span class="name">{t('home.name')}</span>
+      </h1>
+      <p class="summary">{t('home.summary')}</p>
+      <ul class="links">
+        <li><a class="button button-filled" href={site.cvUrl} download={site.cvFileName}>{t('home.cv')}</a></li>
+        <li>
+          <a class="button" href={site.linkedinUrl} target="_blank" rel="noopener noreferrer"
+            >{t('home.linkedin')}</a
+          >
+        </li>
+        <li>
+          <a class="button" href={site.githubUrl} target="_blank" rel="noopener noreferrer"
+            >{t('home.github')}</a
+          >
+        </li>
+        <li><a class="button" href={`mailto:${site.email}`}>{t('home.email')}</a></li>
+      </ul>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  main {
+    display: grid;
+    place-items: center;
+    min-height: 100dvh;
+    padding: 1.5rem;
+  }
+
+  /* As wide as the heading or the button row, whichever is wider. */
+  .content {
+    width: fit-content;
+    max-width: min(47.5rem, 100%);
+  }
+
+  /* The name scales over a wider range than the body text, so it has its own clamp(). */
+  h1 {
+    margin: 0;
+    font-size: clamp(2.25rem, 0.25rem + min(9.5vw, 9.5vh), 6rem);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.045em;
+  }
+
+  .greeting,
+  .name {
+    display: block;
+  }
+
+  .greeting {
+    font-size: 0.36em;
+    letter-spacing: -0.02em;
+    margin-block-end: 0.15em;
+  }
+
+  /* contain: wrap the summary to the width of the heading and buttons, not its own text. */
+  .summary {
+    contain: inline-size;
+    margin: 1.5em 0 0;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin: 1.75em 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .button {
+    display: block;
+    padding: 0.75em 1.5em;
+    border: 1.5px solid var(--color-text);
+    color: var(--color-text);
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .button-filled {
+    background-color: var(--color-text);
+    color: var(--color-filled-text);
+  }
+
+  .button:focus-visible {
+    outline: 2px solid var(--color-text);
+    outline-offset: 3px;
+  }
+</style>

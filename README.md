@@ -17,6 +17,10 @@ Run all commands from the root of the project.
 | `npm run dev` | Starts the local dev server at `localhost:4321`. |
 | `npm run build` | Builds the production site to `./dist/`. |
 | `npm run preview` | Serves the build locally. |
+| `npm run check` | Type-checks the project with `astro check`. |
+| `npm test` | Builds the site and runs the Playwright end-to-end tests against `astro preview`. |
+
+Install the Playwright browser once before you run the tests: `npx playwright install chromium`.
 
 ## Docker
 
@@ -38,12 +42,17 @@ The image serves the static build with nginx on port 80.
 
 ```text
 /
-├── docs/agents/   Configuration for the engineering skills
-├── public/        Static files (favicons)
+├── docs/              ADRs and configuration for the engineering skills
+├── public/            Static files (favicons)
 ├── src/
-│   ├── components/
-│   ├── layouts/
-│   └── pages/
+│   ├── components/    Home.astro, the shared home page for every Locale
+│   ├── data/          site.ts, the link targets (CV, LinkedIn, GitHub, email)
+│   ├── i18n/          The typed copy dictionary and useTranslations()
+│   ├── layouts/       Layout.astro, the HTML document and head tags
+│   ├── pages/
+│   └── styles/        global.css, the Theme colors as custom properties
+├── tests/             Playwright end-to-end tests
 ├── CLAUDE.md
-└── Dockerfile
+├── Dockerfile
+└── playwright.config.ts
 ```
