@@ -48,7 +48,7 @@ export const locales = Object.keys(ui) as Locale[];
 export const defaultLocale = i18n!.defaultLocale as Locale;
 
 /** The Locale the language toggle leads to from each Locale. */
-export const otherLocale = {
+export const localeDictionary = {
   en: 'es',
   es: 'en',
 } as const satisfies Record<Locale, Locale>;
