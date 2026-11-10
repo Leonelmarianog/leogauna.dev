@@ -38,6 +38,10 @@
   --color-filled-text: #ffbc17;
   --font-body: var(--font-space-grotesk);
   --font-mono: var(--font-jetbrains-mono);
+  /* Where the corner controls sit, clear of notches and rounded corners, and how big they are. */
+  --corner-inset-top: max(1.25rem, env(safe-area-inset-top));
+  --corner-inset-right: max(1.25rem, env(safe-area-inset-right));
+  --corner-control-size: 2.75rem;
   transition-property: --color-gradient-start, --color-gradient-end, --color-base, --color-text,
     --color-filled-text;
   transition-duration: 0.4s;
@@ -73,8 +77,14 @@ html {
   background-color: var(--color-base);
 }
 
+/*
+ * The page never gets narrower than 20rem, the smallest target width: below it, the page scrolls
+ * sideways instead of squeezing. position: relative keeps the corner controls in the page's corner.
+ */
 body {
+  position: relative;
   margin: 0;
+  min-width: 20rem;
   min-height: 100dvh;
   background: linear-gradient(135deg, var(--color-gradient-start) 0%, var(--color-gradient-end) 100%);
   color: var(--color-text);
@@ -88,8 +98,8 @@ body {
 .corner-control {
   display: grid;
   place-items: center;
-  min-width: 2.75rem;
-  min-height: 2.75rem;
+  min-width: var(--corner-control-size);
+  min-height: var(--corner-control-size);
   padding: 0;
   border: 1.5px solid var(--color-text);
   border-radius: 50%;
