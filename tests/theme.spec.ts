@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import type { Theme } from '../src/theme/preference';
 
 /** The text color of each Theme, from the spec. */
 const textColor = {
@@ -6,7 +7,7 @@ const textColor = {
   dark: 'rgb(255, 188, 23)',
 };
 
-async function expectTheme(page: Page, theme: 'light' | 'dark') {
+async function expectTheme(page: Page, theme: Theme) {
   await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
   await expect(page.locator('body')).toHaveCSS('color', textColor[theme]);
 }
@@ -58,7 +59,7 @@ test.describe('Theme without JavaScript', () => {
   }
 });
 
-test.describe('theme button', () => {
+test.describe('theme toggle', () => {
   const cases = [
     { path: '/', toDark: 'Switch to dark theme', toLight: 'Switch to light theme' },
     { path: '/es/', toDark: 'Cambiar a tema oscuro', toLight: 'Cambiar a tema claro' },
@@ -78,7 +79,7 @@ test.describe('theme button', () => {
     });
   }
 
-  test('sits in the top corner next to the language link', async ({ page }) => {
+  test('sits in the top corner next to the language toggle', async ({ page }) => {
     await page.goto('/');
     const box = (await page.getByRole('button', { name: 'Switch to dark theme' }).boundingBox())!;
     const link = (await page.getByRole('link', { name: 'Ver en español' }).boundingBox())!;

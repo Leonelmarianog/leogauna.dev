@@ -31,7 +31,7 @@ const t = useTranslations(locale);
 </button>
 
 <script>
-  import { themePreferenceKey } from '../theme/preference';
+  import { themePreferenceKey, type Theme } from '../theme/preference';
 
   const root = document.documentElement;
 
@@ -43,7 +43,7 @@ const t = useTranslations(locale);
 
     showLabel();
     button.addEventListener('click', () => {
-      const theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      const theme: Theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
       root.dataset.theme = theme;
       try {
         localStorage.setItem(themePreferenceKey, theme);
