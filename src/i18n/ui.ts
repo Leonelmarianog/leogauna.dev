@@ -4,7 +4,7 @@ const en = {
   'home.greeting': 'Hi! I’m',
   'home.name': 'Leonel Gauna.',
   'home.summary':
-    'I’m a full-stack developer based in Argentina with 5+ years of experience in tech. I like building things, making them work, and figuring out why they don’t. I’m very meticulous and organized, with a strong focus on quality.',
+    'I’m a full-stack developer based in Argentina with 5+ years of experience in tech. I like building things, making them work, and figuring out why when they don’t. I’m very meticulous and organized, with a strong focus on quality.',
   'home.cv': 'Download CV ↓',
   'home.linkedin': 'LinkedIn ↗',
   'home.github': 'GitHub ↗',
