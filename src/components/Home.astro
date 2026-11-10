@@ -22,8 +22,8 @@ const t = useTranslations(locale);
   <main>
     <div class="content">
       <h1>
-        <span class="greeting">{t('home.greeting')}</span>
-        <span class="name">{t('home.name')}</span>
+        <span class="greeting mask"><span class="rise">{t('home.greeting')}</span></span>
+        <span class="name mask"><span class="rise">{t('home.name')}</span></span>
       </h1>
       <p class="summary">{t('home.summary')}</p>
       <ul class="links">
@@ -86,14 +86,30 @@ const t = useTranslations(locale);
   }
 
   .greeting,
-  .name {
+  .name,
+  .rise {
     display: block;
+  }
+
+  /*
+   * The text rises from behind the mask. The padding extends the mask below the line box,
+   * so descenders such as the "y" in "Soy" are not cut off. Under the greeting, it is also
+   * the space above the name.
+   */
+  .mask {
+    --mask-padding: 0.15em;
+    overflow: hidden;
+    padding-block-end: var(--mask-padding);
+  }
+
+  /* The name's padding does not add space above the summary. */
+  .name {
+    margin-block-end: calc(-1 * var(--mask-padding));
   }
 
   .greeting {
     font-size: 0.36em;
     letter-spacing: -0.02em;
-    margin-block-end: 0.15em;
   }
 
   /* contain: wrap the summary to the width of the heading and buttons, not its own text. */
@@ -122,6 +138,9 @@ const t = useTranslations(locale);
     text-align: center;
     text-decoration: none;
     white-space: nowrap;
+    /* Only the lift: the colors already transition with the Theme, and a second transition would lag behind it. */
+    transition-property: transform, box-shadow;
+    transition-duration: 200ms;
   }
 
   .button-filled {
@@ -129,9 +148,87 @@ const t = useTranslations(locale);
     color: var(--color-filled-text);
   }
 
+  .button:hover {
+    background-color: var(--color-text);
+    color: var(--color-filled-text);
+  }
+
+  .button-filled:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 3px 3px 0 #fff3cc;
+  }
+
   .button:focus-visible {
     outline: 2px solid var(--color-text);
     outline-offset: 3px;
+  }
+
+  /*
+   * The reveal: the greeting and name rise from behind their masks, then the summary and the
+   * buttons slide up, one after another. Only the starting frame is hidden, and backwards fill
+   * holds it during the delay, so the resting state is visible and the content shows whenever
+   * the animation does not run. A visitor who prefers reduced motion sees no animation.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    /* Longhands: the build's CSS minifier rewrites an animation shorthand without a name to none. */
+    .rise,
+    .summary,
+    .links li {
+      animation-duration: 900ms;
+      animation-timing-function: cubic-bezier(0.2, 0.7, 0.1, 1);
+      animation-fill-mode: backwards;
+    }
+
+    .rise {
+      animation-name: rise;
+    }
+
+    .summary,
+    .links li {
+      animation-name: slide-up;
+    }
+
+    .greeting .rise {
+      animation-delay: 100ms;
+    }
+
+    .name .rise {
+      animation-delay: 220ms;
+    }
+
+    .summary {
+      animation-delay: 520ms;
+    }
+
+    .links li:nth-child(1) {
+      animation-delay: 640ms;
+    }
+
+    .links li:nth-child(2) {
+      animation-delay: 700ms;
+    }
+
+    .links li:nth-child(3) {
+      animation-delay: 760ms;
+    }
+
+    .links li:nth-child(4) {
+      animation-delay: 820ms;
+    }
+  }
+
+  /* Starts below the mask's padding too, so no part of the text shows at the first frame. */
+  @keyframes rise {
+    from {
+      transform: translateY(calc(100% + var(--mask-padding)));
+    }
+  }
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(1.5em);
+    }
   }
 
   /* Narrow screens: the button row no longer fits, so the buttons stack in one full-width column. */
