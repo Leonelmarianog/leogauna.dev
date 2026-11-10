@@ -1,0 +1,25 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { defaultLocale, locales } from '../i18n/ui';
+import { localePreferenceKey } from '../i18n/preference';
+
+/**
+ * Sends a visitor whose Locale preference is not the default Locale to that Locale's home
+ * page, before the page paints. Only `/` includes it (ADR-0001). It reads only the Locale
+ * preference, never the browser's language.
+ */
+const homeUrls = Object.fromEntries(
+  locales
+    .filter((locale) => locale !== defaultLocale)
+    .map((locale) => [locale, getRelativeLocaleUrl(locale)]),
+);
+---
+
+<script is:inline define:vars={{ localePreferenceKey, homeUrls }}>
+  try {
+    const preference = localStorage.getItem(localePreferenceKey);
+    if (Object.hasOwn(homeUrls, preference)) location.replace(homeUrls[preference]);
+  } catch {
+    // Storage is blocked: stay on the default Locale.
+  }
+</script>

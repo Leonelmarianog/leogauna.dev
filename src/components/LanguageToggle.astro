@@ -22,6 +22,21 @@ const href = getRelativeLocaleUrl(targetLocale, pathWithoutLocale(Astro.url.path
   aria-label={t('locale.viewIn')}>{t('locale.code')}</a
 >
 
+<script>
+  import { localePreferenceKey } from '../i18n/preference';
+
+  // Save the chosen Locale as the Locale preference, then let the link navigate.
+  for (const link of document.querySelectorAll<HTMLAnchorElement>('.language-toggle')) {
+    link.addEventListener('click', () => {
+      try {
+        localStorage.setItem(localePreferenceKey, link.hreflang);
+      } catch {
+        // Storage is blocked: the link still switches Locale, but the choice is not remembered.
+      }
+    });
+  }
+</script>
+
 <style>
   .language-toggle {
     display: grid;
