@@ -15,6 +15,9 @@ const targetViewports = [
 ];
 
 const paths = ['/', '/es/'];
+
+// The layout is measured at rest: during the reveal, the staggered buttons sit at different heights.
+test.use({ reducedMotion: 'reduce' });
 const themes: Theme[] = ['light', 'dark'];
 
 async function scrollDimensions(page: Page) {
