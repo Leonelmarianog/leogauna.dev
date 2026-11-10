@@ -1,0 +1,49 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { localeDictionary, type Locale } from '../i18n/ui';
+import { pathWithoutLocale, useTranslations } from '../i18n/utils';
+
+interface Props {
+  /** The Locale of the current page. The link leads to the other one. */
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const targetLocale = localeDictionary[locale];
+const t = useTranslations(targetLocale);
+const href = getRelativeLocaleUrl(targetLocale, pathWithoutLocale(Astro.url.pathname, locale));
+---
+
+<a
+  class="language-toggle"
+  href={href}
+  lang={targetLocale}
+  hreflang={targetLocale}
+  aria-label={t('locale.viewIn')}>{t('locale.code')}</a
+>
+
+<style>
+  .language-toggle {
+    display: grid;
+    place-items: center;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    border: 1.5px solid var(--color-text);
+    border-radius: 50%;
+    color: var(--color-text);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .language-toggle:hover {
+    background-color: var(--color-text);
+    color: var(--color-filled-text);
+  }
+
+  .language-toggle:focus-visible {
+    outline: 2px solid var(--color-text);
+    outline-offset: 3px;
+  }
+</style>

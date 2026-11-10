@@ -1,6 +1,8 @@
 ---
 import { Font } from 'astro:assets';
-import type { Locale } from '../i18n/ui';
+import { getAbsoluteLocaleUrl } from 'astro:i18n';
+import { defaultLocale, locales, type Locale } from '../i18n/ui';
+import { pathWithoutLocale } from '../i18n/utils';
 import '../styles/global.css';
 
 interface Props {
@@ -10,6 +12,7 @@ interface Props {
 }
 
 const { locale, title, description } = Astro.props;
+const path = pathWithoutLocale(Astro.url.pathname, locale);
 ---
 
 <!doctype html>
@@ -26,6 +29,12 @@ const { locale, title, description } = Astro.props;
     <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    {
+      locales.map((alternate) => (
+        <link rel="alternate" hreflang={alternate} href={getAbsoluteLocaleUrl(alternate, path)} />
+      ))
+    }
+    <link rel="alternate" hreflang="x-default" href={getAbsoluteLocaleUrl(defaultLocale, path)} />
     <Font cssVariable="--font-space-grotesk" preload />
     <Font cssVariable="--font-jetbrains-mono" />
   </head>
