@@ -61,10 +61,15 @@ function effectiveOpacity(locator: Locator) {
   });
 }
 
-/** Fully visible: not clipped, not off screen, and not faded by the element or any ancestor. */
-async function expectFullyVisible(locator: Locator) {
-  await expect(locator).toBeInViewport({ ratio: 1 });
-  expect(await effectiveOpacity(locator)).toBe(1);
+/**
+ * Every revealed element ends fully visible: not clipped, not off screen, and not faded by the
+ * element or any ancestor. Retries, so it also waits for a reveal that is still playing.
+ */
+async function expectAllFullyVisible(page: Page) {
+  for (const element of await allRevealedElements(page)) {
+    await expect(element).toBeInViewport({ ratio: 1 });
+    await expect.poll(() => effectiveOpacity(element)).toBe(1);
+  }
 }
 
 test.describe('the reveal', () => {
@@ -96,9 +101,7 @@ test.describe('the reveal', () => {
   test('ends with every element fully visible', async ({ page }) => {
     await page.goto('/');
     await waitForAnimations(page);
-    for (const element of await allRevealedElements(page)) {
-      await expectFullyVisible(element);
-    }
+    await expectAllFullyVisible(page);
   });
 
   test('plays again after a Locale switch', async ({ page }) => {
@@ -117,8 +120,8 @@ test.describe('with reduced motion', () => {
     await page.goto('/');
     for (const element of await allRevealedElements(page)) {
       expect(await revealTimings(element)).toEqual([]);
-      await expectFullyVisible(element);
     }
+    await expectAllFullyVisible(page);
   });
 });
 
@@ -126,19 +129,16 @@ test.describe('without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
 
   test('ends with every element fully visible', async ({ page }) => {
+    // The reveal is CSS only, so it still plays: this waits for it to end.
     await page.goto('/');
-    // The reveal is CSS only, so it still plays: wait for it to end.
-    await page.waitForTimeout(2000);
-    for (const element of await allRevealedElements(page)) {
-      await expectFullyVisible(element);
-    }
+    await expectAllFullyVisible(page);
   });
 });
 
 test.describe('on hover', () => {
   /** The light Theme's colors, from the spec. */
-  const text = 'rgb(28, 20, 8)';
-  const filledText = 'rgb(255, 188, 23)';
+  const textColor = 'rgb(28, 20, 8)';
+  const filledTextColor = 'rgb(255, 188, 23)';
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
@@ -156,20 +156,22 @@ test.describe('on hover', () => {
     test(`the ${name} button fills with the text color`, async ({ page }) => {
       const button = page.getByRole('link', { name, exact: true });
       await button.hover();
-      await expect(button).toHaveCSS('background-color', text);
-      await expect(button).toHaveCSS('color', filledText);
+      await expect(button).toHaveCSS('background-color', textColor);
+      await expect(button).toHaveCSS('color', filledTextColor);
     });
   }
 
-  for (const control of ['language toggle', 'theme toggle']) {
+  const cornerControls = [
+    { control: 'language toggle', role: 'link', name: 'Ver en español' },
+    { control: 'theme toggle', role: 'button', name: 'Switch to dark theme' },
+  ] as const;
+
+  for (const { control, role, name } of cornerControls) {
     test(`the ${control} fills with the text color`, async ({ page }) => {
-      const locator =
-        control === 'language toggle'
-          ? page.getByRole('link', { name: 'Ver en español', exact: true })
-          : page.getByRole('button', { name: 'Switch to dark theme', exact: true });
+      const locator = page.getByRole(role, { name, exact: true });
       await locator.hover();
-      await expect(locator).toHaveCSS('background-color', text);
-      await expect(locator).toHaveCSS('color', filledText);
+      await expect(locator).toHaveCSS('background-color', textColor);
+      await expect(locator).toHaveCSS('color', filledTextColor);
     });
   }
 });

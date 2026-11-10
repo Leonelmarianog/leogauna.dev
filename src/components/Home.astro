@@ -138,8 +138,9 @@ const t = useTranslations(locale);
     text-align: center;
     text-decoration: none;
     white-space: nowrap;
-    transition-property: transform, box-shadow, background-color, color;
-    transition-duration: 0.2s;
+    /* Only the lift: the colors already transition with the Theme, and a second transition would lag behind it. */
+    transition-property: transform, box-shadow;
+    transition-duration: 200ms;
   }
 
   .button-filled {
