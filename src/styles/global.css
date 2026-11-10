@@ -77,8 +77,14 @@ html {
   background-color: var(--color-base);
 }
 
+/*
+ * The page never gets narrower than 20rem, the smallest target width: below it, the page scrolls
+ * sideways instead of squeezing. position: relative keeps the corner controls in the page's corner.
+ */
 body {
+  position: relative;
   margin: 0;
+  min-width: 20rem;
   min-height: 100dvh;
   background: linear-gradient(135deg, var(--color-gradient-start) 0%, var(--color-gradient-end) 100%);
   color: var(--color-text);

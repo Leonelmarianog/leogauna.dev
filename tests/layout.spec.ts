@@ -172,3 +172,20 @@ test.describe('beyond the target viewports', () => {
     });
   }
 });
+
+test.describe('below the minimum width', () => {
+  // A folded Galaxy Fold: narrower than the 20rem the page needs.
+  test.use({ viewport: { width: 280, height: 653 } });
+
+  for (const path of paths) {
+    test(`${path} keeps its 20rem width and scrolls sideways instead of squeezing`, async ({
+      page,
+    }) => {
+      await page.goto(path);
+      const size = await scrollDimensions(page);
+      expect(size.scrollWidth).toBe(320);
+      expect((await textBox(page.getByText('Leonel Gauna.'))).height).toBeLessThan(60);
+      await expectControlsClearOfName(page);
+    });
+  }
+});
