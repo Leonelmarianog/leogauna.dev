@@ -28,3 +28,8 @@ dev/
 
 # local issue tracker
 .scratch/
+
+# playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
