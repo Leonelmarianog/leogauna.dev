@@ -3,7 +3,7 @@ import { site } from '../data/site';
 import type { Locale } from '../i18n/ui';
 import { useTranslations } from '../i18n/utils';
 import Layout from '../layouts/Layout.astro';
-import LanguageLink from './LanguageLink.astro';
+import LanguageToggle from './LanguageToggle.astro';
 
 interface Props {
   locale: Locale;
@@ -15,7 +15,7 @@ const t = useTranslations(locale);
 
 <Layout locale={locale} title={t('meta.title')} description={t('meta.description')}>
   <header class="corner-controls">
-    <LanguageLink locale={locale} />
+    <LanguageToggle locale={locale} />
   </header>
   <main>
     <div class="content">

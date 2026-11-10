@@ -14,12 +14,12 @@ const t = useTranslations(target);
 const href = getRelativeLocaleUrl(target, pathWithoutLocale(Astro.url.pathname, locale));
 ---
 
-<a class="language-link" href={href} lang={target} hreflang={target} aria-label={t('locale.viewIn')}
+<a class="language-toggle" href={href} lang={target} hreflang={target} aria-label={t('locale.viewIn')}
   >{t('locale.code')}</a
 >
 
 <style>
-  .language-link {
+  .language-toggle {
     display: grid;
     place-items: center;
     min-width: 2.75rem;
@@ -33,12 +33,12 @@ const href = getRelativeLocaleUrl(target, pathWithoutLocale(Astro.url.pathname, 
     text-decoration: none;
   }
 
-  .language-link:hover {
+  .language-toggle:hover {
     background-color: var(--color-text);
     color: var(--color-filled-text);
   }
 
-  .language-link:focus-visible {
+  .language-toggle:focus-visible {
     outline: 2px solid var(--color-text);
     outline-offset: 3px;
   }

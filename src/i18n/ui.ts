@@ -11,9 +11,9 @@ const en = {
   'home.linkedin': 'LinkedIn ↗',
   'home.github': 'GitHub ↗',
   'home.email': 'Email',
-  /** Shown on the language link that leads to this Locale. */
+  /** Shown on the language toggle that leads to this Locale. */
   'locale.code': 'EN',
-  /** Accessible name of the language link that leads to this Locale, in this Locale. */
+  /** Accessible name of the language toggle that leads to this Locale, in this Locale. */
   'locale.viewIn': 'View in English',
 } as const;
 

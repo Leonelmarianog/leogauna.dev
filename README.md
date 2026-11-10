@@ -45,7 +45,7 @@ The image serves the static build with nginx on port 80.
 ├── docs/              ADRs and configuration for the engineering skills
 ├── public/            Static files (favicons)
 ├── src/
-│   ├── components/    Home.astro, the shared home page for every Locale, and LanguageLink.astro
+│   ├── components/    Home.astro, the shared home page for every Locale, and LanguageToggle.astro
 │   ├── data/          site.ts, the link targets (CV, LinkedIn, GitHub, email)
 │   ├── i18n/          The typed copy dictionary and useTranslations()
 │   ├── layouts/       Layout.astro, the HTML document and head tags

@@ -89,7 +89,7 @@ for (const path of ['/', '/es/']) {
   });
 }
 
-test.describe('language link', () => {
+test.describe('language toggle', () => {
   const cases = [
     { from: '/', to: '/es/', label: 'ES', name: 'Ver en español', lang: 'es' },
     { from: '/es/', to: '/', label: 'EN', name: 'View in English', lang: 'en' },
