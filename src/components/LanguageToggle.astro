@@ -1,6 +1,6 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { locales, type Locale } from '../i18n/ui';
+import { otherLocale, type Locale } from '../i18n/ui';
 import { pathWithoutLocale, useTranslations } from '../i18n/utils';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 }
 
 const { locale } = Astro.props;
-const target = locales.find((other) => other !== locale)!;
+const target = otherLocale[locale];
 const t = useTranslations(target);
 const href = getRelativeLocaleUrl(target, pathWithoutLocale(Astro.url.pathname, locale));
 ---

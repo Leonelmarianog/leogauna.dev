@@ -46,3 +46,9 @@ export const locales = Object.keys(ui) as Locale[];
 
 /** The Locale served without a URL prefix, from `i18n.defaultLocale` in `astro.config.mjs`. */
 export const defaultLocale = i18n!.defaultLocale as Locale;
+
+/** The Locale the language toggle leads to from each Locale. */
+export const otherLocale = {
+  en: 'es',
+  es: 'en',
+} as const satisfies Record<Locale, Locale>;
